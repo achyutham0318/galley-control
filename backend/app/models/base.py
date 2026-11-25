@@ -1,0 +1,73 @@
+import enum
+
+from sqlalchemy.orm import DeclarativeBase
+
+
+class Base(DeclarativeBase):
+    pass
+
+
+class UserRole(str, enum.Enum):
+    STUDENT = "STUDENT"
+    STAFF = "STAFF"
+    MANAGER = "MANAGER"
+
+
+class OrderStatus(str, enum.Enum):
+    CREATED = "CREATED"
+    PAID = "PAID"
+    COLLECTED = "COLLECTED"
+    PENDING_REVIEW = "PENDING_REVIEW"
+    REFUNDED = "REFUNDED"
+    CANCELLED = "CANCELLED"
+
+
+class PrepStage(str, enum.Enum):
+    RECEIVED = "RECEIVED"
+    IN_PREP = "IN_PREP"
+    READY = "READY"
+
+
+class RefundDecision(str, enum.Enum):
+    AUTO_APPROVE = "AUTO_APPROVE"
+    ESCALATE = "ESCALATE"
+    BLOCK = "BLOCK"
+    MANAGER_APPROVE = "MANAGER_APPROVE"
+    MANAGER_REJECT = "MANAGER_REJECT"
+
+
+class RefundStatus(str, enum.Enum):
+    PENDING_REVIEW = "PENDING_REVIEW"
+    INITIATED = "INITIATED"
+    COMPLETED = "COMPLETED"
+    REJECTED = "REJECTED"
+    BLOCKED = "BLOCKED"
+    FAILED = "FAILED"
+
+
+class AuditTier(str, enum.Enum):
+    TIER_1 = "TIER_1"
+    TIER_2 = "TIER_2"
+    HUMAN_OVERRIDE = "HUMAN_OVERRIDE"
+
+
+class AuditEvent(str, enum.Enum):
+    QR_VERIFY = "QR_VERIFY"
+    QR_REFRESH = "QR_REFRESH"
+    REFUND_EVAL = "REFUND_EVAL"
+    MANAGER_DECISION = "MANAGER_DECISION"
+    STAGE_CHANGE = "STAGE_CHANGE"
+    MANUAL_COLLECT = "MANUAL_COLLECT"
+    PAYMENT_EVENT = "PAYMENT_EVENT"
+    OFFLINE_SYNC_CONFLICT = "OFFLINE_SYNC_CONFLICT"
+    SURPLUS_DISCOUNT_UPDATE = "SURPLUS_DISCOUNT_UPDATE"
+    MENU_ITEM_CREATED = "MENU_ITEM_CREATED"
+    MENU_ITEM_UPDATED = "MENU_ITEM_UPDATED"
+    MENU_ITEM_ARCHIVED = "MENU_ITEM_ARCHIVED"
+
+
+class WalletTransactionType(str, enum.Enum):
+    POINTS_EARNED_PICKUP = "POINTS_EARNED_PICKUP"
+    POINTS_CONVERTED_TO_COINS = "POINTS_CONVERTED_TO_COINS"
+    REFUND_CREDITED_COINS = "REFUND_CREDITED_COINS"
+    ORDER_SPENT_COINS = "ORDER_SPENT_COINS"

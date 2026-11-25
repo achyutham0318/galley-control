@@ -1,0 +1,17 @@
+.env
+.env.*
+!.env.example
+backend/.env
+frontend/.env.local
+backend/.venv/
+venv/
+__pycache__/
+*.py[cod]
+*.db
+*.sqlite3
+frontend/node_modules/
+frontend/.next/
+frontend/out/
+frontend/android/app/build/
+.DS_Store
+Thumbs.db

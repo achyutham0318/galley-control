@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+
+<html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_dashboard" name="shell-type"/><script>(function(){try{var t=localStorage.getItem("galley_theme")||"system";var d=t==="dark"||(t==="system"&&window.matchMedia("(prefers-color-scheme: dark)").matches);if(d)document.documentElement.classList.add("dark");}catch(e){}})();</script><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&amp;family=JetBrains+Mono:wght@100..900&amp;family=Plus+Jakarta+Sans:wght@100..900&amp;display=swap" rel="stylesheet"/><style>:root{--gc-bg:#f8f9fa;--gc-surface:#ffffff;--gc-surface-muted:#f1f5f9;--gc-border:#e2e8f0;--gc-text:#0f172a;--gc-text-muted:#64748b;}.dark{--gc-bg:#020617;--gc-surface:#0f172a;--gc-surface-muted:#1e293b;--gc-border:#1e293b;--gc-text:#f8fafc;--gc-text-muted:#94a3b8;}@layer base{html,body{margin:0;padding:0;background-color:var(--gc-bg);color:var(--gc-text);}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}.dark .bg-\[\#F8F9FA\]{background-color:#020617!important;}.dark .bg-white:not(.qr-light-lock){background-color:#0f172a!important;}.dark .bg-white\/95{background-color:rgba(15,23,42,0.95)!important;}.dark .bg-slate-50{background-color:#1e293b!important;}.dark .bg-slate-100{background-color:#1e293b!important;}.dark .text-slate-900,.dark .text-\[\#0F172A\]{color:#f8fafc!important;}.dark .text-slate-800{color:#e2e8f0!important;}.dark .text-slate-700{color:#cbd5e1!important;}.dark .text-slate-600{color:#cbd5e1!important;}.dark .text-slate-500{color:#94a3b8!important;}.dark .border-slate-200{border-color:#334155!important;}.dark .border-slate-100{border-color:#1e293b!important;}.dark .border-slate-300{border-color:#475569!important;}.dark input:not([type=checkbox]),.dark textarea{background-color:#0f172a!important;color:#f8fafc!important;border-color:#475569!important;}.qr-light-lock,.dark .qr-light-lock{background-color:#ffffff!important;color:#000000!important;}</style><script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script><script id="tailwind-config">tailwind.config = { darkMode: "class", theme: { extend: { colors: { "surface-variant": "#d5e3fc", "outline": "#707881", "on-tertiary": "#ffffff", "surface-tint": "#006398", "inverse-primary": "#93ccff", "background": "#f8f9ff", "primary-container": "#007bb9", "inverse-surface": "#233144", "on-background": "#0d1c2e", "surface": "#f8f9ff", "on-primary": "#ffffff", "inverse-on-surface": "#eaf1ff", "secondary": "#006c49", "on-primary-fixed-variant": "#004b73", "surface-dim": "#ccdbf3", "tertiary-container": "#a36700", "surface-container-lowest": "#ffffff", "secondary-fixed-dim": "#4edea3", "on-surface-variant": "#3f4850", "on-error": "#ffffff", "surface-container-highest": "#d5e3fc", "secondary-fixed": "#6ffbbe", "surface-container-high": "#dce9ff", "primary-fixed": "#cce5ff", "error-container": "#ffdad6", "primary-fixed-dim": "#93ccff", "on-primary-fixed": "#001d31", "on-secondary-container": "#00714d", "error": "#ba1a1a", "on-secondary-fixed-variant": "#005236", "surface-bright": "#f8f9ff", "tertiary": "#825100", "tertiary-fixed-dim": "#ffb95f", "on-tertiary-container": "#fffbff", "secondary-container": "#6cf8bb", "on-tertiary-fixed-variant": "#653e00", "on-surface": "#0d1c2e", "surface-container-low": "#eff4ff", "on-secondary-fixed": "#002113", "primary": "#006194", "on-primary-container": "#fdfcff", "outline-variant": "#bfc7d2", "surface-container": "#e6eeff", "on-error-container": "#93000a", "on-secondary": "#ffffff", "tertiary-fixed": "#ffddb8", "on-tertiary-fixed": "#2a1700" }, borderRadius: { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" }, spacing: { "margin-desktop": "2rem", "space-xl": "2rem", "space-lg": "1.5rem", "space-xs": "0.25rem", "margin": "1rem", "space-2xl": "3rem", "space-md": "1rem", "gutter": "1rem", "space-sm": "0.5rem", "gutter-tablet": "1.5rem", "gutter-desktop": "1.5rem", "margin-tablet": "1.5rem" }, fontFamily: { "headline-md": ["Plus Jakarta Sans"], "telemetry-sm": ["JetBrains Mono"], "body-md": ["Inter"], "body-lg": ["Inter"], "telemetry-xs": ["JetBrains Mono"], "body-sm": ["Inter"], "headline-kds": ["JetBrains Mono"], "display-hero": ["Plus Jakarta Sans"], "headline-lg": ["Plus Jakarta Sans"], "display-hero-mobile": ["Plus Jakarta Sans"], "telemetry-md": ["JetBrains Mono"], "headline-kds-mobile": ["JetBrains Mono"] }, fontSize: { "headline-md": ["20px", { lineHeight: "28px", fontWeight: "600" }], "telemetry-sm": ["12px", { lineHeight: "16px", letterSpacing: "0.04em", fontWeight: "600" }], "body-md": ["14px", { lineHeight: "20px", fontWeight: "400" }], "body-lg": ["16px", { lineHeight: "24px", fontWeight: "400" }], "telemetry-xs": ["10px", { lineHeight: "14px", letterSpacing: "0.06em", fontWeight: "500" }], "body-sm": ["12px", { lineHeight: "16px", fontWeight: "400" }], "headline-kds": ["30px", { lineHeight: "36px", letterSpacing: "0.05em", fontWeight: "700" }], "display-hero": ["48px", { lineHeight: "52px", letterSpacing: "-0.02em", fontWeight: "800" }], "headline-lg": ["24px", { lineHeight: "32px", letterSpacing: "-0.01em", fontWeight: "700" }], "display-hero-mobile": ["32px", { lineHeight: "38px", letterSpacing: "-0.01em", fontWeight: "800" }], "telemetry-md": ["14px", { lineHeight: "18px", letterSpacing: "0.02em", fontWeight: "600" }], "headline-kds-mobile": ["22px", { lineHeight: "28px", letterSpacing: "0.03em", fontWeight: "700" }] } } } };</script></head><body class="bg-[#F8F9FA] text-[#0F172A] font-body-md text-body-md antialiased selection:bg-sky-100 selection:text-sky-800"><aside class="fixed left-0 top-0 h-full w-64 bg-white border-r border-slate-200 z-50 flex flex-col pt-4 pb-6 shadow-sm"><div class="px-space-md mb-space-lg flex items-center gap-space-sm"><div class="w-9 h-9 rounded-lg bg-sky-600 flex items-center justify-center text-white flex-shrink-0 shadow-sm"><span class="material-symbols-outlined text-[20px]">shield_with_house</span></div><div class="flex flex-col min-w-0"><span class="font-headline-md text-headline-md text-[#0F172A] tracking-wider font-bold truncate">GALLEY</span><span class="font-telemetry-xs text-telemetry-xs text-slate-500 tracking-widest uppercase">CONTROL CORE</span></div></div><nav class="flex-1 px-space-sm space-y-1" data-active-classes="bg-sky-50 text-sky-700 font-semibold shadow-sm"><a aria-current="page" class="min-h-[48px] flex items-center px-space-md py-2.5 rounded-lg transition-all bg-sky-50 text-sky-700 border border-sky-200/60 font-semibold shadow-sm" data-path="manager-dashboard" href="#"><span class="material-symbols-outlined mr-3 text-[20px] text-sky-600">monitoring</span>Dashboard</a><a class="min-h-[48px] flex items-center px-space-md py-2.5 rounded-lg text-slate-600 hover:bg-slate-100 hover:text-slate-900 font-body-md text-body-md transition-all" data-path="student-app" href="#"><span class="material-symbols-outlined mr-3 text-[20px] text-slate-400">smartphone</span>Student Terminal</a><a class="min-h-[48px] flex items-center px-space-md py-2.5 rounded-lg text-slate-600 hover:bg-slate-100 hover:text-slate-900 font-body-md text-body-md transition-all" data-path="counter-scanner" href="#"><span class="material-symbols-outlined mr-3 text-[20px] text-slate-400">qr_code_scanner</span>Counter Scanner</a><a class="min-h-[48px] flex items-center px-space-md py-2.5 rounded-lg text-slate-600 hover:bg-slate-100 hover:text-slate-900 font-body-md text-body-md transition-all" data-path="kitchen-kds" href="#"><span class="material-symbols-outlined mr-3 text-[20px] text-slate-400">restaurant</span>Kitchen KDS</a></nav><div class="px-space-md pt-space-md border-t border-slate-200"><div class="p-space-sm rounded-lg bg-slate-50 border border-slate-200 font-telemetry-xs text-telemetry-xs text-slate-600"><div class="text-sky-700 font-semibold mb-1 flex items-center gap-1.5"><span class="material-symbols-outlined text-[14px]">lock</span>NONCE GUARD</div>Deterministic Risk Scored</div></div></aside><div class="pl-64"><header class="fixed top-0 left-64 right-0 h-16 bg-white/95 backdrop-blur-md border-b border-slate-200 z-40 flex items-center justify-between px-margin-desktop shadow-sm"><div class="flex items-center gap-space-md"><div class="flex items-center gap-2"><span class="material-symbols-outlined text-sky-600 text-[24px]">shield_with_house</span><div class="flex flex-col"><span class="font-headline-md text-[16px] text-slate-900 font-bold tracking-wider leading-none">GALLEY CONTROL</span><span class="font-telemetry-xs text-[10px] text-slate-500 tracking-widest uppercase">Core Node // Live</span></div></div></div><div class="flex items-center gap-space-md"><div class="hidden md:flex items-center p-1 rounded-lg bg-slate-100 border border-slate-200 gap-1 font-telemetry-xs"><a class="min-h-[48px] px-3 py-1.5 rounded-md bg-white text-sky-700 border border-slate-200 font-semibold shadow-sm flex items-center gap-1.5" href="#"><span class="material-symbols-outlined text-[16px] text-sky-600">admin_panel_settings</span>Manager</a><a class="min-h-[48px] px-3 py-1.5 rounded-md text-slate-600 hover:text-slate-900 hover:bg-slate-200/60 transition-all flex items-center gap-1.5" href="#"><span class="material-symbols-outlined text-[16px] text-slate-400">smartphone</span>Student</a><a class="min-h-[48px] px-3 py-1.5 rounded-md text-slate-600 hover:text-slate-900 hover:bg-slate-200/60 transition-all flex items-center gap-1.5" href="#"><span class="material-symbols-outlined text-[16px] text-slate-400">qr_code_scanner</span>Scanner</a><a class="min-h-[48px] px-3 py-1.5 rounded-md text-slate-600 hover:text-slate-900 hover:bg-slate-200/60 transition-all flex items-center gap-1.5" href="#"><span class="material-symbols-outlined text-[16px] text-slate-400">soup_kitchen</span>Kitchen</a></div><div id="theme-toggle-group" role="group" aria-label="Theme mode" class="flex items-center p-1 rounded-lg bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 gap-0.5"><button type="button" data-theme-mode="light" aria-label="Switch to Light Mode" class="px-2 py-1.5 rounded-md text-xs font-semibold flex items-center gap-1 text-slate-600 dark:text-slate-300"><svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg><span class="hidden lg:inline">Light</span></button><button type="button" data-theme-mode="dark" aria-label="Switch to Dark Mode" class="px-2 py-1.5 rounded-md text-xs font-semibold flex items-center gap-1 text-slate-600 dark:text-slate-300"><svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg><span class="hidden lg:inline">Dark</span></button><button type="button" data-theme-mode="system" aria-label="Use System Theme" class="px-2 py-1.5 rounded-md text-xs font-semibold flex items-center gap-1 text-slate-600 dark:text-slate-300"><svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg><span class="hidden lg:inline">System</span></button></div><div class="w-10 h-10 rounded-full bg-slate-100 border border-slate-200 flex items-center justify-center flex-shrink-0 text-sky-600 shadow-sm"><span class="material-symbols-outlined text-[20px]">verified_user</span></div></div></header><main class="relative pt-16 bg-[#F8F9FA] min-h-screen"><div class="flex flex-col w-full pb-20">
+<!-- Top Ambient Glow & Executive Header -->
+<div class="relative px-margin-desktop pt-space-lg pb-space-md">
+<div class="absolute -top-10 left-1/4 w-96 h-32 bg-sky-200/40 rounded-full blur-3xl pointer-events-none"></div>
+<div class="absolute top-0 right-1/4 w-80 h-28 bg-amber-100/50 rounded-full blur-3xl pointer-events-none"></div>
+<div class="flex flex-col lg:flex-row lg:items-center justify-between gap-space-md relative z-10">
+<div>
+<div class="flex items-center gap-space-sm mb-1.5">
+<span class="inline-flex items-center px-2 py-0.5 rounded bg-sky-50 border border-sky-200 font-telemetry-xs text-telemetry-xs text-sky-700 font-semibold tracking-wider uppercase">
+            POLICY ENGINE ONLINE
+          </span>
+<span class="font-telemetry-xs text-telemetry-xs text-slate-500 tracking-wide">
+            SL-A LEVEL: DETERMINISTIC ZERO-LOSS
+          </span>
+</div>
+<h1 class="font-headline-lg text-headline-lg text-slate-900 tracking-tight font-bold">
+          Canteen Operations &amp; Risk Engine Control
+        </h1>
+</div>
+</div>
+</div>
+<!-- Section 1: ROI KPI Summary Grid (4 high-impact metric cards) -->
+<div class="px-margin-desktop grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-gutter-desktop mb-space-xl">
+<!-- Card 1: Revenue Protected -->
+<div class="relative p-space-lg rounded-xl bg-white border border-slate-200 shadow-sm hover:shadow-md transition-all duration-300">
+<div class="flex items-center justify-between mb-space-sm">
+<span class="font-body-sm text-body-sm text-slate-500 font-medium uppercase tracking-wider">Revenue Protected</span>
+<span class="w-8 h-8 rounded-lg bg-sky-50 text-sky-600 border border-sky-100 flex items-center justify-center">
+<span class="material-symbols-outlined text-[18px]">verified_user</span>
+</span>
+</div>
+<div class="flex items-baseline gap-2 mb-space-sm">
+<span class="font-headline-lg text-headline-lg font-bold text-slate-900 font-telemetry-md">₹48,250</span>
+</div>
+<div class="flex items-center gap-1.5">
+<span class="inline-flex items-center px-1.5 py-0.5 rounded bg-emerald-50 border border-emerald-200 font-telemetry-xs text-telemetry-xs text-emerald-700 font-semibold">
+          +14.2%
+        </span>
+<span class="font-body-sm text-body-sm text-slate-500">fraud prevented this shift</span>
+</div>
+<!-- Inline sparkline chart -->
+<div class="mt-space-md h-8 w-full flex items-end gap-1">
+<div class="w-full bg-slate-100 rounded-t h-[45%]"></div>
+<div class="w-full bg-slate-100 rounded-t h-[60%]"></div>
+<div class="w-full bg-slate-100 rounded-t h-[30%]"></div>
+<div class="w-full bg-slate-100 rounded-t h-[75%]"></div>
+<div class="w-full bg-slate-100 rounded-t h-[90%]"></div>
+<div class="w-full bg-sky-600 rounded-t h-[100%] shadow-[0_0_8px_rgba(2,132,199,0.3)]"></div>
+</div>
+</div>
+<!-- Card 2: QR Replay Attacks Blocked -->
+<div class="relative p-space-lg rounded-xl bg-white border border-slate-200 shadow-sm hover:shadow-md transition-all duration-300">
+<div class="flex items-center justify-between mb-space-sm">
+<span class="font-body-sm text-body-sm text-slate-500 font-medium uppercase tracking-wider">QR Replay Blocked</span>
+<span class="w-8 h-8 rounded-lg bg-rose-50 text-rose-600 border border-rose-100 flex items-center justify-center">
+<span class="material-symbols-outlined text-[18px]">gpp_bad</span>
+</span>
+</div>
+<div class="flex items-baseline gap-2 mb-space-sm">
+<span class="font-headline-lg text-headline-lg font-bold text-slate-900 font-telemetry-md">142</span>
+<span class="font-telemetry-xs text-telemetry-xs text-slate-500 uppercase">Attempts</span>
+</div>
+<div class="flex items-center gap-1.5">
+<span class="inline-flex items-center px-1.5 py-0.5 rounded bg-rose-50 border border-rose-200 font-telemetry-xs text-telemetry-xs text-rose-700 font-semibold">
+          0 False Positives
+        </span>
+<span class="font-body-sm text-body-sm text-slate-500">Nonce validation</span>
+</div>
+<!-- Pulse visual indicator -->
+<div class="mt-space-md flex items-center justify-between pt-2">
+<span class="font-telemetry-xs text-telemetry-xs text-slate-500">Last: #GC-7844 blocked</span>
+<span class="font-telemetry-xs text-telemetry-xs text-rose-600 font-mono font-semibold">2m ago</span>
+</div>
+</div>
+<!-- Card 3: Auto-Refunds Processed -->
+<div class="relative p-space-lg rounded-xl bg-white border border-slate-200 shadow-sm hover:shadow-md transition-all duration-300">
+<div class="flex items-center justify-between mb-space-sm">
+<span class="font-body-sm text-body-sm text-slate-500 font-medium uppercase tracking-wider">Auto-Refunds Executed</span>
+<span class="w-8 h-8 rounded-lg bg-emerald-50 text-emerald-600 border border-emerald-100 flex items-center justify-center">
+<span class="material-symbols-outlined text-[18px]">currency_rupee</span>
+</span>
+</div>
+<div class="flex items-baseline gap-2 mb-space-sm">
+<span class="font-headline-lg text-headline-lg font-bold text-slate-900 font-telemetry-md">318</span>
+<span class="font-telemetry-xs text-telemetry-xs text-slate-500 uppercase">Claims</span>
+</div>
+<div class="flex items-center gap-1.5">
+<span class="inline-flex items-center px-1.5 py-0.5 rounded bg-emerald-50 border border-emerald-200 font-telemetry-xs text-telemetry-xs text-emerald-700 font-semibold">
+          Avg Decision: 12ms
+        </span>
+<span class="font-body-sm text-body-sm text-slate-500">Tier 1 Path</span>
+</div>
+<!-- Success Ring Graphic inline -->
+<div class="mt-space-md flex items-center gap-2 pt-2">
+<div class="w-full bg-slate-100 rounded-full h-1.5 overflow-hidden">
+<div class="bg-emerald-500 h-full rounded-full w-[94%]"></div>
+</div>
+<span class="font-telemetry-xs text-telemetry-xs text-emerald-700 font-mono font-medium">94%</span>
+</div>
+</div>
+<!-- Card 4: Counter Scan Compliance -->
+<div class="relative p-space-lg rounded-xl bg-white border border-slate-200 shadow-sm hover:shadow-md transition-all duration-300">
+<div class="flex items-center justify-between mb-space-sm">
+<span class="font-body-sm text-body-sm text-slate-500 font-medium uppercase tracking-wider">Counter Compliance</span>
+<span class="w-8 h-8 rounded-lg bg-sky-50 text-sky-600 border border-sky-100 flex items-center justify-center">
+<span class="material-symbols-outlined text-[18px]">qr_code_scanner</span>
+</span>
+</div>
+<div class="flex items-baseline gap-2 mb-space-sm">
+<span class="font-headline-lg text-headline-lg font-bold text-slate-900 font-telemetry-md">99.4%</span>
+</div>
+<div class="w-full bg-slate-100 rounded-full h-2 mt-1 mb-2 overflow-hidden">
+<div class="bg-sky-600 h-full rounded-full transition-all duration-500 w-[99.4%] shadow-[0_0_10px_rgba(2,132,199,0.3)]"></div>
+</div>
+<div class="flex items-center justify-between">
+<span class="font-telemetry-xs text-telemetry-xs text-slate-500">Pickup Handshake</span>
+<span class="font-telemetry-xs text-telemetry-xs text-sky-700 font-mono font-semibold">2,140 Verified</span>
+</div>
+</div>
+</div>
+<!-- Operational Command Core Split -->
+<div class="px-margin-desktop grid grid-cols-1 xl:grid-cols-12 gap-gutter-desktop">
+<!-- SECTION A: Pending Refund Escalations (Tier 2 Risk Engine) (5 cols) -->
+<div class="xl:col-span-5 flex flex-col gap-space-md">
+<div class="flex items-center justify-between pb-1">
+<div class="flex items-center gap-space-sm">
+<span class="w-2.5 h-2.5 rounded-full bg-amber-500 animate-pulse"></span>
+<h2 class="font-headline-md text-headline-md text-slate-900 font-semibold">
+            Pending Refund Escalations
+          </h2>
+</div>
+<span class="px-2 py-0.5 rounded-full bg-amber-50 border border-amber-200 text-amber-700 font-telemetry-xs text-telemetry-xs font-bold">
+          Tier 2 Queue (3)
+        </span>
+</div>
+<!-- Live Escalation Card #1: Dev K. -->
+<div class="relative rounded-xl bg-white border border-slate-200 p-space-lg shadow-sm overflow-hidden transition-all duration-300" id="escalation-card-dev">
+<!-- Accent indicator banner -->
+<div class="absolute top-0 left-0 right-0 h-1 bg-amber-500"></div>
+<div class="flex items-start justify-between gap-space-sm mb-space-md mt-1">
+<div>
+<div class="flex items-center gap-space-sm mb-1">
+<span class="font-headline-md text-headline-md font-bold text-slate-900 font-telemetry-md">#GC-7798</span>
+<span class="px-2 py-0.5 rounded bg-amber-50 border border-amber-200 font-telemetry-xs text-telemetry-xs text-amber-700 font-semibold uppercase">
+                Under Review
+              </span>
+</div>
+<div class="flex items-center gap-2 text-slate-500 font-body-sm text-body-sm">
+<span class="font-semibold text-slate-900">Dev K.</span>
+<span>•</span>
+<span class="font-telemetry-xs text-telemetry-xs font-mono">Roll: CS-2023</span>
+<span>•</span>
+<span class="text-slate-900 font-bold font-telemetry-sm">₹320</span>
+</div>
+</div>
+<div class="text-right">
+<span class="font-telemetry-xs text-telemetry-xs text-slate-500 block">Initiated</span>
+<span class="font-telemetry-sm text-telemetry-sm text-amber-600 font-mono font-bold">6m 12s ago</span>
+</div>
+</div>
+<!-- Meal Item Specimen with Photo Reference -->
+<div class="flex items-center gap-space-sm p-space-sm rounded-lg bg-slate-50 border border-slate-100 mb-space-md">
+<img class="w-14 h-14 rounded-lg object-cover flex-shrink-0" data-alt="Close-up appetizing shot of an Indian canteen hot meal plate with paneer butter masala, crispy garlic naan, and steamed basmati rice served in a metallic canteen tray under warm industrial lights." src="https://lh3.googleusercontent.com/aida-public/AB6AXuA5d2bKQWaBCBEBytDcpiFJcRV_IgfF45j5uclwKOXmZhwYBS_Im96YXZcNj9A_fq5VJ4UpIrdE0RtqgUWoL90Ms2TWLSU2okoz74yaBrt11zYrmWiYaar3hV-BExrGUj-L4Knoq_Y68iQKd3gCKuaRI3l6YNGSo9wqhQ4z6MMMMb3WlwU1d9h_fX0-08JyqwCjO8btAsAPgWPL409FFBqISkDnFJRDk0jYwI50Rfo"/>
+<div class="min-w-0 flex-1">
+<div class="font-body-md text-body-md text-slate-900 font-medium truncate">1x Paneer Thali Deluxe + Extra Naan</div>
+<div class="font-telemetry-xs text-telemetry-xs text-slate-500">Line Counter 3 • Kitchen Order Placed: 13:42</div>
+</div>
+</div>
+<!-- Multi-factor Risk Decomposition Pills -->
+<div class="mb-space-md space-y-2">
+<div class="flex items-center justify-between">
+<span class="font-telemetry-xs text-telemetry-xs text-slate-600 uppercase tracking-wider font-semibold">
+              Risk Factor Decomposition (Policy Formula v2.4)
+            </span>
+<span class="font-telemetry-sm text-telemetry-sm text-amber-600 font-mono font-bold">
+              R = 0.68
+            </span>
+</div>
+<div class="grid grid-cols-3 gap-1.5 font-telemetry-xs text-telemetry-xs"><div class="p-2.5 rounded-lg bg-rose-50/60 border border-rose-200 flex flex-col gap-0.5"><span class="text-rose-700 font-mono text-[11px] font-medium">S_prep (0.45)</span><span class="text-rose-600 font-mono font-bold text-telemetry-sm">0.85</span><span class="text-rose-500 text-[10px] leading-tight">Cooking finished</span></div><div class="p-2.5 rounded-lg bg-emerald-50/60 border border-emerald-200 flex flex-col gap-0.5"><span class="text-emerald-700 font-mono text-[11px] font-medium">V_user (0.35)</span><span class="text-emerald-600 font-mono font-bold text-telemetry-sm">0.15</span><span class="text-emerald-500 text-[10px] leading-tight">Low claim history</span></div><div class="p-2.5 rounded-lg bg-amber-50/60 border border-amber-200 flex flex-col gap-0.5"><span class="text-amber-700 font-mono text-[11px] font-medium">L_surge (0.20)</span><span class="text-amber-600 font-mono font-bold text-telemetry-sm">0.60</span><span class="text-amber-600 text-[10px] leading-tight">Peak rush 48/min</span></div></div>
+<!-- Composite Risk Rating Bar -->
+<div class="p-2.5 rounded-lg bg-slate-50 border border-slate-100">
+<div class="flex justify-between items-center mb-1">
+<span class="font-telemetry-xs text-telemetry-xs text-slate-500 uppercase">Deterministic Score:</span>
+<span class="font-telemetry-xs text-telemetry-xs text-amber-700 font-mono font-bold">MEDIUM-HIGH RISK</span>
+</div>
+<div class="w-full bg-slate-200 h-2 rounded-full overflow-hidden flex">
+<div class="bg-emerald-500 h-full w-[35%]"></div>
+<div class="bg-amber-500 h-full w-[33%]"></div>
+<div class="bg-slate-300 h-full w-[32%]"></div>
+</div>
+</div>
+</div>
+<!-- Plain-English Explanation -->
+<div class="p-space-sm rounded-lg bg-slate-50 border border-slate-100 mb-space-lg">
+<div class="flex items-start gap-2">
+<span class="material-symbols-outlined text-amber-600 text-[18px] flex-shrink-0 mt-0.5">info</span>
+<div class="font-body-sm text-body-sm text-slate-600 leading-relaxed">
+<span class="text-slate-900 font-semibold">Engine Explanation:</span> Student initiated cancel request <span class="text-slate-900 font-mono font-semibold">6 minutes</span> after kitchen began cooking. High food waste risk detected ($S_{prep}=0.85$). Student account is in good standing ($V_{user}=0.15$). Manager clearance required.
+            </div>
+</div>
+</div>
+<!-- Quick Action Triggers (min 48px height) -->
+<div class="grid grid-cols-2 gap-space-sm">
+<button class="min-h-[48px] px-space-md py-3 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white font-body-md text-body-md font-bold flex items-center justify-center gap-2 transition-all active:scale-95 shadow-sm" onclick="handleDecision('approve', 'dev')" type="button">
+<span class="material-symbols-outlined text-[20px]">check_circle</span>
+<span>Approve Refund</span>
+</button>
+<button class="min-h-[48px] px-space-md py-3 rounded-lg bg-rose-600 hover:bg-rose-700 text-white font-body-md text-body-md font-bold flex items-center justify-center gap-2 transition-all active:scale-95 shadow-sm" onclick="handleDecision('reject', 'dev')" type="button">
+<span class="material-symbols-outlined text-[20px]">cancel</span>
+<span>Reject Claim</span>
+</button>
+</div>
+</div>
+<!-- Escalation Card #2: Quick Peek Mini-card -->
+<div class="rounded-xl bg-white border border-slate-200 p-space-md shadow-sm hover:shadow transition-all flex items-center justify-between">
+<div class="flex items-center gap-space-sm min-w-0">
+<div class="w-10 h-10 rounded-lg bg-slate-100 border border-slate-200 flex items-center justify-center font-telemetry-xs text-telemetry-xs font-mono font-bold text-sky-700 flex-shrink-0">
+            #7799
+          </div>
+<div class="min-w-0">
+<div class="font-body-md text-body-md text-slate-900 font-semibold truncate">Ananya S. • ₹140 (Cold Beverage)</div>
+<div class="font-telemetry-xs text-telemetry-xs text-slate-500">R = 0.52 (Unprepped item • Dispenser jammed)</div>
+</div>
+</div>
+<button class="min-h-[48px] px-space-md rounded-lg bg-slate-100 hover:bg-slate-200 border border-slate-200 text-slate-700 font-telemetry-xs text-telemetry-xs font-bold uppercase transition-all" type="button">
+          Review
+        </button>
+</div>
+</div>
+<!-- SECTION B: Immutable Operational Audit Log (7 cols) -->
+<div class="xl:col-span-7 flex flex-col gap-space-md">
+<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-space-sm pb-1">
+<div>
+<h2 class="font-headline-md text-headline-md text-slate-900 font-semibold">
+            Immutable Operational Audit Log
+          </h2>
+<span class="font-body-sm text-body-sm text-slate-500">Append-only cryptographic event trail (Last 20 Decisions)</span>
+</div>
+</div>
+<!-- Filter Tabs -->
+<div class="flex items-center gap-2 overflow-x-auto pb-1">
+<button class="px-space-md py-2 rounded-lg bg-sky-600 text-white font-telemetry-xs text-telemetry-xs font-bold uppercase shadow-sm">
+          All (1,248)
+        </button>
+<button class="px-space-md py-2 rounded-lg bg-white border border-slate-200 hover:bg-slate-50 text-slate-600 font-telemetry-xs text-telemetry-xs font-semibold uppercase transition-all">
+          Auto-Approved (1,082)
+        </button>
+<button class="px-space-md py-2 rounded-lg bg-white border border-slate-200 hover:bg-slate-50 text-slate-600 font-telemetry-xs text-telemetry-xs font-semibold uppercase transition-all">
+          Escalated (24)
+        </button>
+<button class="px-space-md py-2 rounded-lg bg-white border border-slate-200 hover:bg-slate-50 text-slate-600 font-telemetry-xs text-telemetry-xs font-semibold uppercase transition-all">
+          Replay Blocked (142)
+        </button>
+</div>
+<!-- Audit Log Container -->
+<div class="rounded-xl bg-white border border-slate-200 shadow-sm overflow-hidden flex flex-col divide-y divide-slate-100">
+<!-- Log Item 1: Auto Approved Instant -->
+<div class="p-space-md hover:bg-slate-50/70 transition-colors flex flex-col gap-2 bg-white">
+<div class="flex flex-wrap items-center justify-between gap-2">
+<div class="flex items-center gap-2">
+<span class="font-telemetry-xs text-telemetry-xs text-slate-400 font-mono">13:46:12.804</span>
+<span class="font-telemetry-sm text-telemetry-sm text-slate-900 font-mono font-bold">#GC-7801</span>
+<span class="px-2 py-0.5 rounded bg-emerald-50 border border-emerald-200 text-emerald-700 font-telemetry-xs text-telemetry-xs font-bold uppercase">
+                AUTO_APPROVE
+              </span>
+<span class="px-1.5 py-0.5 rounded bg-slate-100 font-telemetry-xs text-telemetry-xs text-slate-600 font-mono">
+                Tier 1: 9ms
+              </span>
+</div>
+<div class="flex items-center gap-2">
+<span class="font-telemetry-xs text-telemetry-xs text-slate-400 font-mono">Risk R:</span>
+<span class="font-telemetry-sm text-telemetry-sm text-emerald-600 font-mono font-bold">0.08</span>
+<span class="font-telemetry-xs text-telemetry-xs text-slate-900 font-bold">₹110</span>
+</div>
+</div>
+<p class="font-body-sm text-body-sm text-slate-600">
+<span class="text-slate-900 font-medium">Auto-Refund Settlement:</span> Cancel request logged 18s post-order before kitchen KDS ticket acceptance. Kitchen state <code class="text-sky-700 bg-sky-50 px-1 py-0.5 rounded font-mono">QUEUED</code>. Safe zero-waste trigger confirmed.
+          </p>
+</div>
+<!-- Log Item 2: QR Replay Blocked -->
+<div class="p-space-md hover:bg-slate-50/70 transition-colors flex flex-col gap-2 bg-slate-50/40">
+<div class="flex flex-wrap items-center justify-between gap-2">
+<div class="flex items-center gap-2">
+<span class="font-telemetry-xs text-telemetry-xs text-slate-400 font-mono">13:44:02.119</span>
+<span class="font-telemetry-sm text-telemetry-sm text-slate-900 font-mono font-bold">#GC-7794</span>
+<span class="px-2 py-0.5 rounded bg-rose-50 border border-rose-200 text-rose-700 font-telemetry-xs text-telemetry-xs font-bold uppercase">
+                BLOCKED
+              </span>
+<span class="px-1.5 py-0.5 rounded bg-rose-50 text-rose-600 font-telemetry-xs text-telemetry-xs font-mono font-medium">
+                NONCE_REPLAY
+              </span>
+</div>
+<div class="flex items-center gap-2">
+<span class="font-telemetry-xs text-telemetry-xs text-slate-400 font-mono">Risk R:</span>
+<span class="font-telemetry-sm text-telemetry-sm text-rose-600 font-mono font-bold">1.00</span>
+<span class="font-telemetry-xs text-telemetry-xs text-slate-900 font-bold">₹240</span>
+</div>
+</div>
+<p class="font-body-sm text-body-sm text-slate-600">
+<span class="text-rose-600 font-medium">Replay Attack Intercepted:</span> Dynamic QR payload presented with expired nonce timestamp delta <code class="text-rose-600 bg-rose-50 px-1 py-0.5 rounded font-mono">+184s</code>. Hash matched consumed token <code class="text-slate-500 font-mono">0x9f...32b</code> from Counter Scanner #1.
+          </p>
+</div>
+<!-- Log Item 3: Manual Override Approved -->
+<div class="p-space-md hover:bg-slate-50/70 transition-colors flex flex-col gap-2 bg-white">
+<div class="flex flex-wrap items-center justify-between gap-2">
+<div class="flex items-center gap-2">
+<span class="font-telemetry-xs text-telemetry-xs text-slate-400 font-mono">13:40:55.342</span>
+<span class="font-telemetry-sm text-telemetry-sm text-slate-900 font-mono font-bold">#GC-7790</span>
+<span class="px-2 py-0.5 rounded bg-amber-50 border border-amber-200 text-amber-700 font-telemetry-xs text-telemetry-xs font-bold uppercase">
+                MANUAL_OVERRIDE
+              </span>
+<span class="px-1.5 py-0.5 rounded bg-slate-100 font-telemetry-xs text-telemetry-xs text-slate-500 font-mono">
+                Tier 2: Mgr #4
+              </span>
+</div>
+<div class="flex items-center gap-2">
+<span class="font-telemetry-xs text-telemetry-xs text-slate-400 font-mono">Risk R:</span>
+<span class="font-telemetry-sm text-telemetry-sm text-amber-600 font-mono font-bold">0.62</span>
+<span class="font-telemetry-xs text-telemetry-xs text-slate-900 font-bold">₹190</span>
+</div>
+</div>
+<p class="font-body-sm text-body-sm text-slate-600">
+<span class="text-slate-900 font-medium">Kitchen Delay Exception:</span> Prep elapsed threshold exceeded 18 minutes (&gt; S_rush SLA). System flagged delay anomaly; manager granted full instant wallet credit without student friction.
+          </p>
+</div>
+<!-- Log Item 4: Instant Auto Reject (Abuse Pattern) -->
+<div class="p-space-md hover:bg-slate-50/70 transition-colors flex flex-col gap-2 bg-slate-50/40">
+<div class="flex flex-wrap items-center justify-between gap-2">
+<div class="flex items-center gap-2">
+<span class="font-telemetry-xs text-telemetry-xs text-slate-400 font-mono">13:35:10.021</span>
+<span class="font-telemetry-sm text-telemetry-sm text-slate-900 font-mono font-bold">#GC-7782</span>
+<span class="px-2 py-0.5 rounded bg-rose-50 border border-rose-200 text-rose-700 font-telemetry-xs text-telemetry-xs font-bold uppercase">
+                AUTO_REJECT
+              </span>
+<span class="px-1.5 py-0.5 rounded bg-slate-100 font-telemetry-xs text-telemetry-xs text-slate-600 font-mono">
+                Tier 1: 11ms
+              </span>
+</div>
+<div class="flex items-center gap-2">
+<span class="font-telemetry-xs text-telemetry-xs text-slate-400 font-mono">Risk R:</span>
+<span class="font-telemetry-sm text-telemetry-sm text-rose-600 font-mono font-bold">0.94</span>
+<span class="font-telemetry-xs text-telemetry-xs text-slate-900 font-bold">₹420</span>
+</div>
+</div>
+<p class="font-body-sm text-body-sm text-slate-600">
+<span class="text-rose-600 font-medium">Serial Cancellation Frequency:</span> User ID <code class="text-slate-800 font-mono bg-slate-100 px-1 py-0.5 rounded">US-9812</code> recorded 4 cancellations within 60 minutes. Hard rate-limit enforced by Redis velocity bucket filter.
+          </p>
+</div>
+</div>
+</div>
+</div>
+<!-- Raw JSON Snapshot Modal (Hidden by Default) -->
+<div class="fixed inset-0 z-50 bg-slate-900/40 backdrop-blur-sm hidden items-center justify-center p-margin" id="json-modal">
+<div class="bg-white rounded-2xl max-w-2xl w-full p-space-lg shadow-2xl border border-slate-200 flex flex-col max-h-[85vh]">
+<div class="flex items-center justify-between pb-space-sm mb-space-sm border-b border-slate-100">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-sky-600">terminal</span>
+<span class="font-headline-md text-headline-md font-bold text-slate-900">Execution Telemetry Frame Snapshot</span>
+</div>
+<button class="w-8 h-8 rounded-lg bg-slate-100 hover:bg-slate-200 flex items-center justify-center text-slate-500 hover:text-slate-800 transition-colors" onclick="toggleJsonModal()">
+<span class="material-symbols-outlined text-[20px]">close</span>
+</button>
+</div>
+<div class="bg-slate-900 p-space-md rounded-xl font-telemetry-xs text-telemetry-xs font-mono text-sky-300 overflow-y-auto flex-1 leading-relaxed shadow-inner">
+<pre>{
+  "event_id": "evt_991823abce",
+  "engine_version": "v2.4-deterministic",
+  "order_id": "#GC-7798",
+  "timestamp": 1713447972804,
+  "factors": {
+    "S_prep": {
+      "weight": 0.45,
+      "value": 0.85,
+      "state": "COOKING_COMPLETE",
+      "kitchen_line": 3
+    },
+    "V_user": {
+      "weight": 0.35,
+      "value": 0.15,
+      "lifetime_cancellations": 1,
+      "trust_score": 0.94
+    },
+    "L_surge": {
+      "weight": 0.20,
+      "value": 0.60,
+      "counter_queue_depth": 48
+    }
+  },
+  "composite_risk_r": 0.6825,
+  "threshold_rules": {
+    "tier_1_auto_approve_cutoff": 0.25,
+    "tier_2_escalate_band": [0.26, 0.75],
+    "tier_1_auto_reject_cutoff": 0.76
+  },
+  "route": "ESCALATE_TO_CANTEEN_MANAGER",
+  "nonce_verification": "VALID_ORIGIN",
+  "execution_duration_ms": 13.84
+}</pre>
+</div>
+<div class="pt-space-md flex justify-end">
+<button class="min-h-[48px] px-space-lg rounded-lg bg-sky-600 hover:bg-sky-700 text-white font-bold transition-all shadow-sm" onclick="toggleJsonModal()">
+          Close Inspector
+        </button>
+</div>
+</div>
+</div>
+<!-- Interactive Scenario Notification Toast -->
+<div class="fixed top-20 right-8 z-50 transform translate-y-[-250%] opacity-0 pointer-events-none transition-all duration-300 p-space-md rounded-xl shadow-xl bg-white border border-slate-200 flex items-center gap-space-md min-w-[320px]" id="action-toast">
+<div class="w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0" id="toast-icon-bg">
+<span class="material-symbols-outlined text-[22px]" id="toast-icon"></span>
+</div>
+<div class="flex-1">
+<div class="font-body-md text-body-md font-bold text-slate-900" id="toast-title"></div>
+<div class="font-telemetry-xs text-telemetry-xs text-slate-500" id="toast-desc"></div>
+</div>
+</div>
+</div>
+<script>
+  function handleDecision(type, studentId) {
+    const card = document.getElementById('escalation-card-' + studentId);
+    const toast = document.getElementById('action-toast');
+    const toastTitle = document.getElementById('toast-title');
+    const toastDesc = document.getElementById('toast-desc');
+    const toastIcon = document.getElementById('toast-icon');
+    const toastIconBg = document.getElementById('toast-icon-bg');
+
+    if (type === 'approve') {
+      toastTitle.textContent = "Refund Approved • ₹320 Credited";
+      toastDesc.textContent = "Instant refund credited to Dev K. Kitchen scrap notification dispatched.";
+      toastIcon.textContent = "check_circle";
+      toastIconBg.className = "w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0 bg-emerald-500 text-white";
+    } else {
+      toastTitle.textContent = "Claim Rejected • Food Waste Prevented";
+      toastDesc.textContent = "Student notified: Cooking was finished. Order held for pickup.";
+      toastIcon.textContent = "cancel";
+      toastIconBg.className = "w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0 bg-rose-600 text-white";
+    }
+
+    if (card) {
+      card.style.opacity = '0.4';
+      card.style.pointerEvents = 'none';
+    }
+
+    toast.classList.remove('translate-y-[-150%]');
+    toast.classList.add('translate-y-0');
+
+    setTimeout(() => {
+      toast.classList.remove('translate-y-0');
+      toast.classList.add('translate-y-[-150%]');
+    }, 4000);
+  }
+
+  function toggleJsonModal() {
+    const modal = document.getElementById('json-modal');
+    if (modal.classList.contains('hidden')) {
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+    } else {
+      modal.classList.remove('flex');
+      modal.classList.add('hidden');
+    }
+  }
+</script></main></div><aside class="fixed bottom-5 right-5 z-50"><button class="min-h-[48px] px-6 py-3 rounded-full bg-white border border-amber-300 hover:border-sky-500 text-slate-800 shadow-lg hover:shadow-xl flex items-center gap-3 transition-all active:scale-95 cursor-pointer" type="button"><span class="material-symbols-outlined text-amber-500 text-[20px]">bolt</span><span class="font-telemetry-sm text-telemetry-sm font-bold tracking-wider uppercase text-slate-900">Judge Demo Simulator</span><span class="px-2 py-0.5 rounded-full bg-sky-50 text-sky-700 border border-sky-200 font-telemetry-xs text-telemetry-xs font-bold">LIVE</span></button></aside>
+<script src="https://cdn.jsdelivr.net/npm/qrcode-generator@1.4.4/qrcode.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.js"></script>
+<script src="/app.js?v=9"></script>
+</body></html>
