@@ -1,4 +1,39 @@
-const API_BASE = "http://127.0.0.1:8000/api/v1";
+const PROD_API_URL = "https://galley-control-api.onrender.com/api/v1";
+
+function normalizeApiUrl(raw) {
+  let clean = String(raw || "").trim().replace(/\/+$/, "");
+  if (!clean) return "";
+  if (!clean.endsWith("/api/v1")) {
+    clean = `${clean}/api/v1`;
+  }
+  return clean;
+}
+
+function resolveApiBaseUrl() {
+  try {
+    const params = new URLSearchParams(window.location.search);
+    const apiParam = params.get("api");
+    if (apiParam) {
+      const normalized = normalizeApiUrl(apiParam);
+      if (normalized) {
+        localStorage.setItem("galley_api_url", normalized);
+        return normalized;
+      }
+    }
+    const saved = localStorage.getItem("galley_api_url");
+    if (saved) {
+      const normalizedSaved = normalizeApiUrl(saved);
+      if (normalizedSaved) return normalizedSaved;
+    }
+  } catch {}
+  const host = window.location.hostname;
+  if (host === "localhost" || host === "127.0.0.1") {
+    return "http://localhost:8000/api/v1";
+  }
+  return normalizeApiUrl(PROD_API_URL);
+}
+
+let API_BASE = resolveApiBaseUrl();
 
 const state = {
   managerToken: null,
@@ -60,73 +95,132 @@ function showToast(title, desc, type = "success") {
   }, 4500);
 }
 
+function updateCoreNodeIndicator(isOnline) {
+  const dot = document.getElementById("core-node-dot");
+  const txt = document.getElementById("core-node-status-text");
+  if (dot) {
+    dot.className = isOnline
+      ? "inline-block w-1.5 h-1.5 rounded-full bg-emerald-500"
+      : "inline-block w-1.5 h-1.5 rounded-full bg-rose-500";
+  }
+  if (txt) {
+    txt.textContent = isOnline ? "Core Node // Online" : "Core Node // Offline";
+  }
+}
+
+function renderConnectionBanner(isOffline, errorDetail = "") {
+  const mainEl = document.querySelector("main");
+  if (!mainEl) return;
+  let banner = document.getElementById("backend-connection-banner");
+  if (!isOffline) {
+    if (banner) banner.remove();
+    updateCoreNodeIndicator(true);
+    return;
+  }
+  updateCoreNodeIndicator(false);
+  if (!banner) {
+    banner = document.createElement("div");
+    banner.id = "backend-connection-banner";
+    banner.className = "mx-margin-desktop mt-4 mb-2 px-4 py-3 rounded-xl bg-amber-50 dark:bg-amber-950/60 border border-amber-300 dark:border-amber-700 flex flex-wrap items-center justify-between gap-3 text-xs";
+    mainEl.insertBefore(banner, mainEl.firstChild);
+  }
+  banner.innerHTML = `
+    <div class="text-amber-900 dark:text-amber-200">
+      <span class="font-bold">Backend Node Unreachable:</span>
+      <span class="font-mono">${API_BASE}</span>
+      ${errorDetail ? `<span class="text-amber-700 dark:text-amber-300 ml-1">(${errorDetail})</span>` : ""}
+    </div>
+    <button id="banner-config-node" type="button" class="px-3 py-1.5 rounded-lg bg-amber-600 hover:bg-amber-700 text-white font-bold">Configure Backend Node</button>
+  `;
+  const btn = banner.querySelector("#banner-config-node");
+  if (btn) btn.onclick = () => showBackendNodeModal();
+}
+
 async function apiFetch(path, options = {}, token = state.managerToken) {
   const headers = { "Content-Type": "application/json", ...(options.headers || {}) };
   if (token) headers["Authorization"] = `Bearer ${token}`;
-  const resp = await fetch(`${API_BASE}${path}`, { ...options, headers });
-  const text = await resp.text();
-  let data = null;
   try {
-    data = text ? JSON.parse(text) : null;
-  } catch {
-    data = text;
+    const resp = await fetch(`${API_BASE}${path}`, { ...options, headers });
+    const text = await resp.text();
+    let data = null;
+    try {
+      data = text ? JSON.parse(text) : null;
+    } catch {
+      data = text;
+    }
+    renderConnectionBanner(false);
+    return { status: resp.status, ok: resp.ok, data, headers: resp.headers };
+  } catch (err) {
+    renderConnectionBanner(true, err?.message || "Network error");
+    return {
+      status: 0,
+      ok: false,
+      data: { message: String(err) },
+      headers: new Headers(),
+      networkError: true,
+    };
   }
-  return { status: resp.status, ok: resp.ok, data, headers: resp.headers };
 }
 
 async function ensureAuth() {
-  if (!state.managerToken) {
-    const res = await apiFetch("/auth/staff/pin-login", {
-      method: "POST",
-      body: JSON.stringify({ staff_id: "MGR01", pin: "112233" }),
-    }, null);
-    if (res.ok) state.managerToken = res.data.access_token;
-  }
-  if (!state.staffToken) {
-    const res = await apiFetch("/auth/staff/pin-login", {
-      method: "POST",
-      body: JSON.stringify({ staff_id: "COUNTER01", pin: "445566" }),
-    }, null);
-    if (res.ok) state.staffToken = res.data.access_token;
-  }
-  if (!state.studentToken) {
-    const res = await apiFetch("/auth/student/login", {
-      method: "POST",
-      body: JSON.stringify({ email: "student01@campus.edu", password: "Student@123" }),
-    }, null);
-    if (res.ok) state.studentToken = res.data.access_token;
-  }
+  try {
+    if (!state.managerToken) {
+      const res = await apiFetch("/auth/staff/pin-login", {
+        method: "POST",
+        body: JSON.stringify({ staff_id: "MGR01", pin: "112233" }),
+      }, null);
+      if (res.ok && res.data?.access_token) state.managerToken = res.data.access_token;
+    }
+    if (!state.staffToken) {
+      const res = await apiFetch("/auth/staff/pin-login", {
+        method: "POST",
+        body: JSON.stringify({ staff_id: "COUNTER01", pin: "445566" }),
+      }, null);
+      if (res.ok && res.data?.access_token) state.staffToken = res.data.access_token;
+    }
+    if (!state.studentToken) {
+      const res = await apiFetch("/auth/student/login", {
+        method: "POST",
+        body: JSON.stringify({ email: "student01@campus.edu", password: "Student@123" }),
+      }, null);
+      if (res.ok && res.data?.access_token) state.studentToken = res.data.access_token;
+    }
+  } catch {}
 }
 
 async function loadManagerDashboard() {
-  await ensureAuth();
-  const [metricsRes, escRes, auditRes, surplusRes, mgrMenuRes] = await Promise.all([
-    apiFetch("/manager/metrics"),
-    apiFetch("/manager/escalations"),
-    apiFetch(buildAuditUrl()),
-    apiFetch("/manager/menu/surplus-overview"),
-    apiFetch("/manager/menu"),
-  ]);
+  try {
+    await ensureAuth();
+    const [metricsRes, escRes, auditRes, surplusRes, mgrMenuRes] = await Promise.all([
+      apiFetch("/manager/metrics"),
+      apiFetch("/manager/escalations"),
+      apiFetch(buildAuditUrl()),
+      apiFetch("/manager/menu/surplus-overview"),
+      apiFetch("/manager/menu"),
+    ]);
 
-  if (metricsRes.ok) renderMetrics(metricsRes.data);
-  if (escRes.ok) {
-    state.escalations = escRes.data;
-    if (state.selectedEscalationIndex >= state.escalations.length) {
-      state.selectedEscalationIndex = 0;
+    if (metricsRes.ok && metricsRes.data) renderMetrics(metricsRes.data);
+    if (escRes.ok && Array.isArray(escRes.data)) {
+      state.escalations = escRes.data;
+      if (state.selectedEscalationIndex >= state.escalations.length) {
+        state.selectedEscalationIndex = 0;
+      }
+      renderEscalations();
     }
-    renderEscalations();
-  }
-  if (auditRes.ok) {
-    state.auditLogs = auditRes.data.items || [];
-    renderAuditLogs();
-  }
-  if (surplusRes.ok) {
-    state.surplusItems = surplusRes.data || [];
-    renderSurplusControlPanel(metricsRes.ok ? metricsRes.data : null);
-  }
-  if (mgrMenuRes.ok) {
-    state.managerMenuItems = mgrMenuRes.data || [];
-    renderMenuEditorPanel();
+    if (auditRes.ok && auditRes.data) {
+      state.auditLogs = auditRes.data.items || [];
+      renderAuditLogs();
+    }
+    if (surplusRes.ok && Array.isArray(surplusRes.data)) {
+      state.surplusItems = surplusRes.data;
+      renderSurplusControlPanel(metricsRes.ok ? metricsRes.data : null);
+    }
+    if (mgrMenuRes.ok && Array.isArray(mgrMenuRes.data)) {
+      state.managerMenuItems = mgrMenuRes.data;
+      renderMenuEditorPanel();
+    }
+  } catch (err) {
+    renderConnectionBanner(true, String(err));
   }
 }
 
@@ -1081,22 +1175,25 @@ function setupRoleViews() {
 }
 
 async function renderRoleView(path, container) {
-  await ensureAuth();
-  if (path === "student-app") {
-    const restRes = await apiFetch("/restaurants", {}, null);
-    state.restaurants = restRes.ok ? restRes.data : [];
-    if (!state.selectedRestaurantId && state.restaurants.length > 0) {
-      state.selectedRestaurantId = state.restaurants[0].id;
-    }
-    const menuPath = state.selectedRestaurantId ? `/restaurants/${state.selectedRestaurantId}/menu` : "/menu";
-    const [menuRes, ordersRes, walletRes] = await Promise.all([
-      apiFetch(menuPath, {}, null),
-      apiFetch("/orders/me?limit=10", {}, state.studentToken),
-      apiFetch("/wallet/me", {}, state.studentToken),
-    ]);
-    state.menuItems = menuRes.ok ? menuRes.data : [];
-    state.myOrders = ordersRes.ok ? ordersRes.data.items : [];
-    state.wallet = walletRes.ok ? walletRes.data : { gold_coins: 0, loyalty_points: 0, gold_coins_value_paise: 0, convertible_coins_available: 0, transactions: [] };
+  try {
+    await ensureAuth();
+    if (path === "student-app") {
+      const restRes = await apiFetch("/restaurants", {}, null);
+      state.restaurants = restRes.ok && Array.isArray(restRes.data) ? restRes.data : [];
+      if (!state.selectedRestaurantId && state.restaurants.length > 0) {
+        state.selectedRestaurantId = state.restaurants[0].id;
+      }
+      const menuPath = state.selectedRestaurantId ? `/restaurants/${state.selectedRestaurantId}/menu` : "/menu";
+      const [menuRes, ordersRes, walletRes] = await Promise.all([
+        apiFetch(menuPath, {}, null),
+        state.studentToken ? apiFetch("/orders/me?limit=10", {}, state.studentToken) : Promise.resolve({ ok: false }),
+        state.studentToken ? apiFetch("/wallet/me", {}, state.studentToken) : Promise.resolve({ ok: false }),
+      ]);
+      state.menuItems = menuRes.ok && Array.isArray(menuRes.data) ? menuRes.data : [];
+      state.myOrders = ordersRes.ok && ordersRes.data?.items ? ordersRes.data.items : [];
+      state.wallet = walletRes.ok && walletRes.data
+        ? walletRes.data
+        : { gold_coins: 0, loyalty_points: 0, gold_coins_value_paise: 0, convertible_coins_available: 0, transactions: [] };
     const w = state.wallet;
     const waitMin = state.menuItems[0]?.current_wait_minutes ?? 0;
     const milestonePct = (w.loyalty_points % 10) * 10;
@@ -1550,6 +1647,122 @@ async function renderRoleView(path, container) {
       };
     });
   }
+  } catch (err) {
+    renderConnectionBanner(true, String(err));
+    container.innerHTML = `
+      <div class="rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 p-6 shadow-sm space-y-3">
+        <h2 class="font-bold text-lg text-slate-900 dark:text-slate-100">Unable to load ${path}</h2>
+        <p class="text-sm text-slate-600 dark:text-slate-300">Active backend node: <span class="font-mono">${API_BASE}</span></p>
+        <button id="fallback-node-btn" type="button" class="px-4 py-2 rounded-lg bg-sky-600 hover:bg-sky-700 text-white text-xs font-bold">Configure Backend Node</button>
+      </div>
+    `;
+    const fb = container.querySelector("#fallback-node-btn");
+    if (fb) fb.onclick = () => showBackendNodeModal();
+  }
+}
+
+async function showBackendNodeModal() {
+  const old = document.getElementById("backend-node-modal");
+  if (old) old.remove();
+
+  const modal = document.createElement("div");
+  modal.id = "backend-node-modal";
+  modal.className = "fixed inset-0 z-[220] flex items-center justify-center bg-slate-900/60 backdrop-blur-sm p-4";
+  modal.innerHTML = `
+    <div class="bg-white dark:bg-slate-900 rounded-2xl shadow-2xl p-6 w-full max-w-md space-y-4 border border-slate-200 dark:border-slate-700">
+      <div class="flex items-center justify-between border-b border-slate-100 dark:border-slate-800 pb-3">
+        <div class="font-bold text-lg text-slate-900 dark:text-slate-100">Backend Node Connector</div>
+        <button id="bn-close" class="text-slate-400 hover:text-slate-700 font-bold" type="button">X</button>
+      </div>
+      <div class="p-3 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 flex items-center justify-between gap-3">
+        <div class="min-w-0">
+          <div class="text-[11px] font-semibold text-slate-500 uppercase">Active API Base</div>
+          <div id="bn-active-url" class="text-xs font-mono text-slate-800 dark:text-slate-200 truncate">${API_BASE}</div>
+        </div>
+        <span id="bn-health-badge" class="px-2.5 py-1 rounded-full text-[11px] font-bold bg-slate-200 text-slate-700">CHECKING</span>
+      </div>
+      <div class="space-y-2">
+        <label class="block text-xs font-semibold text-slate-600 dark:text-slate-300">Backend URL (HTTPS Render, Railway, or Tunnel)</label>
+        <input id="bn-url-input" type="url" value="${API_BASE}" placeholder="https://your-api.onrender.com/api/v1" class="w-full rounded-lg border-slate-300 dark:border-slate-600 font-mono text-xs" />
+      </div>
+      <div class="flex gap-2">
+        <button id="bn-reset" class="px-3.5 py-2.5 rounded-lg bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-600 text-slate-700 dark:text-slate-200 text-xs font-bold" type="button">Reset</button>
+        <button id="bn-connect" class="flex-1 py-2.5 rounded-lg bg-sky-600 hover:bg-sky-700 text-white text-xs font-bold" type="button">Connect &amp; Test /health</button>
+      </div>
+    </div>
+  `;
+  document.body.appendChild(modal);
+
+  const badge = modal.querySelector("#bn-health-badge");
+  const activeUrlEl = modal.querySelector("#bn-active-url");
+  const urlInput = modal.querySelector("#bn-url-input");
+
+  async function checkHealth(baseUrl) {
+    badge.textContent = "CHECKING";
+    badge.className = "px-2.5 py-1 rounded-full text-[11px] font-bold bg-slate-200 text-slate-700";
+    try {
+      const resp = await fetch(`${baseUrl}/health`);
+      if (resp.ok) {
+        badge.textContent = "ONLINE";
+        badge.className = "px-2.5 py-1 rounded-full text-[11px] font-bold bg-emerald-100 text-emerald-800 border border-emerald-300";
+        renderConnectionBanner(false);
+        return true;
+      }
+    } catch {}
+    badge.textContent = "OFFLINE";
+    badge.className = "px-2.5 py-1 rounded-full text-[11px] font-bold bg-rose-100 text-rose-800 border border-rose-300";
+    renderConnectionBanner(true);
+    return false;
+  }
+
+  checkHealth(API_BASE);
+
+  function closeModal() { modal.remove(); }
+  modal.querySelector("#bn-close").onclick = closeModal;
+  modal.onclick = (e) => { if (e.target === modal) closeModal(); };
+
+  modal.querySelector("#bn-reset").onclick = async () => {
+    localStorage.removeItem("galley_api_url");
+    API_BASE = resolveApiBaseUrl();
+    urlInput.value = API_BASE;
+    activeUrlEl.textContent = API_BASE;
+    state.managerToken = null;
+    state.staffToken = null;
+    state.studentToken = null;
+    await checkHealth(API_BASE);
+    if (state.activeView === "manager-dashboard") {
+      loadManagerDashboard();
+    } else {
+      const container = document.getElementById("role-view-container");
+      if (container) renderRoleView(state.activeView, container);
+    }
+  };
+
+  modal.querySelector("#bn-connect").onclick = async () => {
+    const normalized = normalizeApiUrl(urlInput.value);
+    if (!normalized) return;
+    localStorage.setItem("galley_api_url", normalized);
+    API_BASE = normalized;
+    activeUrlEl.textContent = API_BASE;
+    state.managerToken = null;
+    state.staffToken = null;
+    state.studentToken = null;
+    const ok = await checkHealth(API_BASE);
+    showToast(
+      ok ? "Backend Connected" : "Backend Offline",
+      ok ? `Connected to ${API_BASE}` : `Could not reach ${API_BASE}/health`,
+      ok ? "success" : "error"
+    );
+    if (ok) {
+      closeModal();
+      if (state.activeView === "manager-dashboard") {
+        loadManagerDashboard();
+      } else {
+        const container = document.getElementById("role-view-container");
+        if (container) renderRoleView(state.activeView, container);
+      }
+    }
+  };
 }
 
 function setupThemeToggle() {
@@ -1589,6 +1802,8 @@ function setupThemeToggle() {
 
 document.addEventListener("DOMContentLoaded", () => {
   setupThemeToggle();
+  const coreNodeBtn = document.getElementById("core-node-btn");
+  if (coreNodeBtn) coreNodeBtn.onclick = () => showBackendNodeModal();
   wireAuditFiltersAndModal();
   setupSimulatorDrawer();
   setupRoleViews();

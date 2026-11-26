@@ -15,3 +15,5 @@ frontend/out/
 frontend/android/app/build/
 .DS_Store
 Thumbs.db
+
+.vercel
